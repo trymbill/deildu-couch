@@ -1,32 +1,34 @@
 # Deildu.net Search Provider for Couch Potato Server
 
-Clone this repository into **/couchpotato/core/providers/torrent**, and use it 
-to enable Deildu.net as a Search Provider for Couch Potato. Deildu.net is 
-**restricted to Iceland only**, so if you're not in Iceland, please ignore :)*
+####SETUP INSTRUCTIONS (TLDR)
 
-#### Note: This repo might not be here for very long. I just decided to set it up for people to try it out until I get a clear response on whether or not these kinds of Search Providers, restricted to countries and what not, will be added to the CouchPotatoServer repo. Until then, it will remain here as a way of developing it further.
+Download the master branch *https://github.com/trymbill/deildu-couch/archive/master.zip* and throw it into
+your Couch Potato torrent providers folder.
 
-SETUP INSTRUCTIONS
----
+####SETUP INSTRUCTIONS
 
 ```
-# Go into your CouchPotatoServer folder
-cd ~/CouchPotatoServer
+# Download the Deildu.net search provider
+https://github.com/trymbill/deildu-couch/archive/master.zip
 
 # Shut down CouchPotatoServer, either by opening it up in a browser 
 # and going to "settings" -> "shutdown", or by terminating the process
 
-# Clone this repository into the torrent providers folder
-git clone https://github.com/trymbill/deildu-couch.git ./couchpotato/core/providers/torrent/deildu
+# Open your CouchPotatoServer folder and traverse into the torrent providers folder
+cd ~/CouchPotatoServer # or wherever you have it stored
+cd ./couchpotato/core/providers/torrent
+
+# Extract the downloaded master.zip into a folder named deildu
+unzip master.zip -d deildu # note, your master.zip might be located somewhere else
 
 # Startup CouchPotatoServer
+cd ~/CouchPotatoServer # or wherever you have it stored
 python CouchPotato.py
 
 # Now you should see Deildu.net as one of the prodivers for Torrents.
 ```
 
-SHOUT OUT
----
+####SHOUT OUT
 
 A huge shout out to RuudBurger (https://github.com/RuudBurger) for making CouchPotato. 
 It's a really well thought out machine, easily extendable for anyone with basic python 
