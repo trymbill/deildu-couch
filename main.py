@@ -12,13 +12,14 @@ class Deildu(TorrentProvider):
 
     urls = {
         'test': 'http://deildu.net/',
-        'login' : 'http://deildu.net/takelogin.php',
-        'detail': 'http://deildu.net/details.php?id=%s',
-        'search': 'http://deildu.net/browse.php?sort=seeders&type=desc&cat=0',
         'base': 'http://deildu.net/',
+        'login': 'http://deildu.net/takelogin.php',
+        'login_check': 'https://www.iptorrents.com/inbox.php',
+        'detail': 'http://deildu.net/details.php?id=%s',
+        'search': 'http://deildu.net/browse.php?sort=seeders&type=desc&cat=0'
     }
 
-    http_time_between_calls = 5 #seconds
+    http_time_between_calls = 5  # seconds
 
     def _searchOnTitle(self, title, movie, quality, results):
 
@@ -28,11 +29,9 @@ class Deildu(TorrentProvider):
         })
         url = "%s&%s" % (self.urls['search'], arguments)
 
-        # Cookie login
-        if not self.login_opener and not self.login():
-            return
+        data = self.getHTMLData(url)
 
-        data = self.getHTMLData(url, opener = self.login_opener)
+        print url
 
         # If nothing found, exit
         if 'Ekkert fannst!' in data:
@@ -44,6 +43,14 @@ class Deildu(TorrentProvider):
 
             try:
                 resultsTable = html.find('table', {'class': 'torrentlist'})
+
+                if not resultsTable:
+                    log.error('Failed getting results from %s: ' +
+                              'HTML changed, please file bug report on ' +
+                              'https://github.com/trymbill/deildu-couch',
+                              (self.getName()))
+                    return
+
                 entries = resultsTable.find_all('tr')
                 for result in entries[1:]:
 
@@ -60,20 +67,22 @@ class Deildu(TorrentProvider):
                         'size': self.parseSize(all_cells[6].get_text()),
                         'seeders': tryInt(all_cells[8].get_text()),
                         'leechers': tryInt(all_cells[9].get_text()),
-                        'url': self.urls['base'] + all_cells[2].find('a')['href'],
+                        'url': self.urls['base'] +
+                        all_cells[2].find('a')['href'],
                         'download': self.loginDownload,
-                        'description': self.urls['base'] + all_cells[1].find('a')['href'],
+                        'description': self.urls['base'] +
+                        all_cells[1].find('a')['href'],
                     })
 
             except:
-                log.error('Failed getting results from %s: %s', (self.getName(), traceback.format_exc()))
-
+                log.error('Failed getting results from %s: %s',
+                         (self.getName(), traceback.format_exc()))
 
     def getLoginParams(self):
-        return tryUrlencode({
+        return {
             'username': self.conf('username'),
-            'password': self.conf('password'),
-        })
+            'password': self.conf('password')
+        }
 
     def loginSuccess(self, output):
         return 'Login failed!' not in output
