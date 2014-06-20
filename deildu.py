@@ -1,4 +1,6 @@
-from main import Deildu
+from couchpotato.core.logger import CPLog
+from couchpotato.core.media._base.providers.torrents._deildu import Deildu
+from couchpotato.core.media.movie.providers.base import MovieProvider
 
 def start():
     return Deildu()
@@ -8,7 +10,6 @@ config = [{
     'groups': [
         {
             'tab': 'searcher',
-            'subtab': 'providers',
             'list': 'torrent_providers',
             'name': 'Deildu.net',
             'description': 'See <a href="http://deildu.net">Deildu.net</a>',
