@@ -1,25 +1,21 @@
-# Deildu.net Search Provider for Couch Potato Server
-
-####SETUP INSTRUCTIONS (TLDR)
-
-Download the master branch *https://github.com/trymbill/deildu-couch/archive/master.zip* and throw it into
-your Couch Potato torrent providers folder.
+# Deildu.net Search Provider for Couch Potato Server v2.4.0
 
 ####SETUP INSTRUCTIONS
 
 ```
 # Download the Deildu.net search provider
-https://github.com/trymbill/deildu-couch/archive/master.zip
+https://github.com/trymbill/deildu-couch/archive/master.zip and extract it somewhere.
 
 # Shut down CouchPotatoServer, either by opening it up in a browser 
 # and going to "settings" -> "shutdown", or by terminating the process
 
-# Open your CouchPotatoServer folder and traverse into the torrent providers folder
-cd ~/CouchPotatoServer # or wherever you have it stored
-cd ./couchpotato/core/providers/torrent
+# Open your CouchPotatoServer folder and traverse into the following directory
+cd [pathtocouchpotato]/.couchpotato/couchpotato/core/media/_base/providers/torrent
+From the extracted folder, put _deildu.py in this directory.
 
-# Extract the downloaded master.zip into a folder named deildu
-unzip master.zip -d deildu # note, your master.zip might be located somewhere else
+# Now traverse into the following directory
+cd [pathtocouchpotato]/.couchpotato/couchpotato/core/media/movie/providers/torrent
+From the extracted folder, put deildu.py in this directory.
 
 # Startup CouchPotatoServer
 cd ~/CouchPotatoServer # or wherever you have it stored
